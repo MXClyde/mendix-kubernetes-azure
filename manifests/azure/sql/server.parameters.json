@@ -6,13 +6,13 @@
             "value": "mxdbadmin"
         },
         "administratorLoginPassword": {
-            "value": "$(masterdbpassword)"
+            "value": "#{masterdbpassword}#"
         },
         "location": {
-            "value": "$(Azure_DataResourceGroup_Region)"
+            "value": "#{Azure_DataResourceGroup_Region}#"
         },
         "serverName": {
-            "value": "$(orgname)-mendix-$(env)"
+            "value": "#{orgname}#-mendix-#{env}#"
         },
         "enableADS": {
             "value": false
