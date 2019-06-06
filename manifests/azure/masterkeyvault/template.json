@@ -28,6 +28,9 @@
                 "description": "The access policies defined for this vault."
             }
         },
+        "tenant": {
+            "type": "string"
+        },
         "enabledForDeployment": {
             "type": "bool"
         },
