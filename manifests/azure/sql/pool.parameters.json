@@ -1,0 +1,39 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "serverName": {
+            "value": "$(orgname)-mendix-$(env)"
+        },
+        "serverLocation": {
+            "value": "$(Azure_DataResourceGroup_Region)"
+        },
+        "elasticPoolName": {
+            "value": "Mendix-"
+        },
+        "skuName": {
+            "value": "StandardPool"
+        },
+        "tier": {
+            "value": "Standard"
+        },
+        "poolLimit": {
+            "value": "50"
+        },
+        "poolSize": {
+            "value": 53687091200
+        },
+        "perDatabasePerformanceMin": {
+            "value": "0"
+        },
+        "perDatabasePerformanceMax": {
+            "value": "50"
+        },
+        "zoneRedundant": {
+            "value": false
+        },
+        "licenseType": {
+            "value": "LicenseIncluded"
+        }
+    }
+}

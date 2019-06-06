@@ -1,0 +1,175 @@
+---
+apiVersion: "v1"
+kind: "List"
+items:
+
+  - apiVersion: v1
+    kind: "Namespace"
+    metadata:
+      name: "#{k8s.namespace}#"
+      labels:
+        name: "#{k8s.namespace}#"
+        
+  - apiVersion: apps/v1beta1
+    kind: "Deployment"
+    metadata:
+      name: #{k8s.namespace}#-slave
+      namespace: #{k8s.namespace}#
+    spec:
+      replicas: #{k8s.replicas}# # tells deployment to run 1 pod matching the template
+      template: # create pods using pod definition in this template
+        metadata:
+          annotations:
+            ad.datadoghq.com/#{k8s.namespace}#-slave.logs: "[{\"source\": \"mendix\", \"service\": \"#{k8s.namespace}#-slave\", \"log_processing_rules\": [{\"type\": \"multi_line\", \"pattern\": \"^(TRACE - |TRACE:|DEBUG - |DEBUG:|INFO - |INFO:|WARNING - |WARNING:|ERROR - |ERROR:|CRITICAL - |CRITICAL:)\", \"name\": \"new_log_start_with_date\"}]}]"
+            ad.datadoghq.com/#{k8s.namespace}#-slave.check_names: "[\"prometheus\"]"
+            ad.datadoghq.com/#{k8s.namespace}#-slave.init_configs: "[{}]"
+            ad.datadoghq.com/#{k8s.namespace}#-slave.instances: "[{\"prometheus_url\": \"http://%%host%%:%%port%%/metrics\",\"namespace\": \"mendix\",\"metrics\": [\"*\"]}]"
+          labels:
+            name: "#{k8s.namespace}#-slave"
+            app: "#{k8s.namespace}#"
+            containertype: "slave"
+        spec:
+          imagePullSecrets:
+              - name: registry
+          containers:
+          - name: #{k8s.namespace}#-slave
+            image: #{docker.registry}#/#{docker.repository}#/#{appname}#:#{Release.Artifacts.DockerBuild.SourceVersion}#-#{Release.Artifacts.DockerBuild.BuildId}#
+            ports:
+            - containerPort: 80
+            - containerPort: 9273
+            livenessProbe:
+               httpGet:
+                 path: /
+                 port: 80
+               initialDelaySeconds: 20
+               periodSeconds: 5
+            readinessProbe:
+               httpGet:
+                 path: /
+                 port: 80
+               initialDelaySeconds: 20
+               periodSeconds: 5
+            resources:
+              requests:
+                memory: "#{k8s.memoryrequest_slave}#"
+            env:
+              - name: CF_INSTANCE_INDEX
+                value: "1"
+              - name: MXRUNTIME_com_mendix_core_StorageService
+                value: "#{customruntime.MXRUNTIME_com_mendix_core_StorageService}#"
+              - name: MXRUNTIME_com_mendix_storage_azure_AccountName
+                value: "#{customruntime.MXRUNTIME_com_mendix_storage_azure_AccountName}#"
+              - name: MXRUNTIME_com_mendix_storage_azure_AccountKey
+                value: "#{customruntime.MXRUNTIME_com_mendix_storage_azure_AccountKey}#"
+              - name: MXRUNTIME_com_mendix_storage_azure_Container
+                value: "#{customruntime.MXRUNTIME_com_mendix_storage_azure_Container}#"                
+              - name: MXRUNTIME_com_mendix_storage_s3_AccessKeyId
+                value: "#{customruntime.MXRUNTIME_com_mendix_storage_s3_AccessKeyId}#"
+              - name: MXRUNTIME_com_mendix_storage_s3_SecretAccessKey
+                value: "#{customruntime.MXRUNTIME_com_mendix_storage_s3_SecretAccessKey}#"
+              - name: MXRUNTIME_com_mendix_storage_s3_BucketName
+                value: "#{customruntime.MXRUNTIME_com_mendix_storage_s3_BucketName}#"
+              - name: MXRUNTIME_com_mendix_storage_PerformDeleteFromStorage
+                value: "false"
+              - name: "MXRUNTIME_ApplicationRootUrl"
+                value: "#{customruntime.MXRUNTIME_ApplicationUrl}#"
+            envFrom:
+            - configMapRef:
+                name: mendix-config
+
+  - apiVersion: apps/v1beta1
+    kind: "Deployment"
+    metadata:
+      name: #{k8s.namespace}#-leader
+      namespace: #{k8s.namespace}#
+    spec:
+      replicas: 1 # tells deployment to run 1 pod matching the template
+      template: # create pods using pod definition in this template
+        metadata:
+          annotations:  
+            ad.datadoghq.com/#{k8s.namespace}#-leader.logs: "[{\"source\": \"mendix\", \"service\": \"#{k8s.namespace}#-leader\", \"log_processing_rules\": [{\"type\": \"multi_line\", \"pattern\": \"^(TRACE - |TRACE:|DEBUG - |DEBUG:|INFO - |INFO:|WARNING - |WARNING:|ERROR - |ERROR:|CRITICAL - |CRITICAL:)\", \"name\": \"new_log_start_with_date\"}]}]"
+            ad.datadoghq.com/#{k8s.namespace}#-leader.check_names: "[\"prometheus\"]"
+            ad.datadoghq.com/#{k8s.namespace}#-leader.init_configs: "[{}]"
+            ad.datadoghq.com/#{k8s.namespace}#-leader.instances: "[{\"prometheus_url\": \"http://%%host%%:%%port%%/metrics\",\"namespace\": \"mendix\",\"metrics\": [\"*\"]}]"
+          labels:
+            app: "#{k8s.namespace}#"
+            containertype: "leader"
+            name: "#{k8s.namespace}#-leader"
+        spec:
+          imagePullSecrets:
+              - name: registry
+          containers:
+          - name: #{k8s.namespace}#-leader
+            image: #{docker.registry}#/#{docker.repository}#/#{appname}#:#{Release.Artifacts.DockerBuild.SourceVersion}#-#{Release.Artifacts.DockerBuild.BuildId}#
+            ports:
+            - containerPort: 80
+            - containerPort: 9273
+            livenessProbe:
+               httpGet:
+                 path: /
+                 port: 80
+               initialDelaySeconds: 20
+               periodSeconds: 5
+            readinessProbe:
+               httpGet:
+                 path: /
+                 port: 80
+               initialDelaySeconds: 20
+               periodSeconds: 5
+               failureThreshold: 120 # high number to accomodate database synchronizations
+            resources:
+              requests:
+                memory: "#{k8s.memoryrequest_leader}#"
+            env:
+              - name: CF_INSTANCE_INDEX
+                value: "0"
+              - name: MXRUNTIME_com_mendix_core_StorageService
+                value: "#{customruntime.MXRUNTIME_com_mendix_core_StorageService}#"
+              - name: MXRUNTIME_com_mendix_storage_azure_AccountName
+                value: "#{customruntime.MXRUNTIME_com_mendix_storage_azure_AccountName}#"
+              - name: MXRUNTIME_com_mendix_storage_azure_AccountKey
+                value: "#{customruntime.MXRUNTIME_com_mendix_storage_azure_AccountKey}#"
+              - name: MXRUNTIME_com_mendix_storage_azure_Container
+                value: "#{customruntime.MXRUNTIME_com_mendix_storage_azure_Container}#"                
+              - name: MXRUNTIME_com_mendix_storage_s3_AccessKeyId
+                value: "#{customruntime.MXRUNTIME_com_mendix_storage_s3_AccessKeyId}#"
+              - name: MXRUNTIME_com_mendix_storage_s3_SecretAccessKey
+                value: "#{customruntime.MXRUNTIME_com_mendix_storage_s3_SecretAccessKey}#"
+              - name: MXRUNTIME_com_mendix_storage_s3_BucketName
+                value: "#{customruntime.MXRUNTIME_com_mendix_storage_s3_BucketName}#"
+              - name: MXRUNTIME_com_mendix_storage_s3_EndPoint  
+                value: "#{customruntime.MXRUNTIME_com_mendix_storage_s3_EndPoint}#"
+              - name: MXRUNTIME_com_mendix_storage_PerformDeleteFromStorage
+                value: "false"
+              - name: "MXRUNTIME_ApplicationRootUrl"
+                value: "#{customruntime.MXRUNTIME_ApplicationUrl}#"            
+            envFrom:
+            - configMapRef:
+                name: mendix-config     
+                
+  - apiVersion: "v1"
+    kind: "Service"
+    metadata:
+      name: "#{k8s.namespace}#"
+      namespace: "#{k8s.namespace}#"
+      labels:
+        app: "#{k8s.namespace}#"
+    spec:
+      selector:
+        app: "#{k8s.namespace}#"
+      ports:
+      - port: 80
+
+  - apiVersion: "v1"
+    kind: "Service"
+    metadata:
+      name: "#{k8s.namespace}#-leader"
+      namespace: "#{k8s.namespace}#"
+      labels:
+        app: "#{k8s.namespace}#-leader"
+    spec:
+      selector:
+        app: "#{k8s.namespace}#"
+        containertype: "leader"
+      ports:
+      - port: 80
