@@ -12,7 +12,7 @@
             "value": "#{Azure_DataResourceGroup_Region}#"
         },
         "serverName": {
-            "value": "#{orgname}#-mendix-#{env}#"
+            "value": "#{orgname}#-mendix"
         },
         "enableADS": {
             "value": false
