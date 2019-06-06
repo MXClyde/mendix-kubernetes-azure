@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "serverName": {
-            "value": "$(orgname)-mendix-$(env)"
+            "value": "#{orgname}#-mendix"
         },
         "serverLocation": {
-            "value": "$(Azure_DataResourceGroup_Region)"
+            "value": "#{Azure_DataResourceGroup_Region}#"
         },
         "elasticPoolName": {
             "value": "Mendix-"
