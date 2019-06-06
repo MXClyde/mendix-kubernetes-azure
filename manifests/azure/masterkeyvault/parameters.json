@@ -11,6 +11,9 @@
         "sku": {
             "value": "Standard"
         },
+        "tenant": {
+            "value": "#{tenant}#"
+        },
         "enabledForDeployment": {
             "value": false
         },
