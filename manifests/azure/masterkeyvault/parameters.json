@@ -17,7 +17,7 @@
         "accessPolicies": {
             "value": [
                 {
-                    "objectId": "#{serviceprincipalid}#",
+                    "objectId": "#{serviceprincipalobjectid}#",
                     "tenantId": "#{tenant}#",
                     "permissions": {
                         "keys": [
