@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "name": {
-            "value": "kvmx-#{orgname}#-#{appname}#-#{env}#"
+            "value": "kvmx-#{orgname}#-#{appname}#-#{environment}#"
         },
         "location": {
             "value": "#{Azure_DataResourceGroup_Region}#"
