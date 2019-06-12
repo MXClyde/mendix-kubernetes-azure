@@ -18,7 +18,7 @@
             "value": [
                 {
                     "objectId": "#{serviceprincipalobjectid}#",
-                    "tenantId": "#{tenant}#",
+                    "tenantId": "#{tenantid}#",
                     "permissions": {
                         "keys": [
                             "Get",
