@@ -9,7 +9,7 @@
             "value": "#{Azure_DataResourceGroup_Region}#"
         },
         "elasticPoolName": {
-            "value": "Mendix-"
+            "value": "Mendix-ElasticPool"
         },
         "skuName": {
             "value": "StandardPool"
