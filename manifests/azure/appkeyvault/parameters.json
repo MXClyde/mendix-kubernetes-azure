@@ -12,13 +12,13 @@
             "value": "Standard"
         },
         "tenant": {
-            "value": "#{tenantid}#"
+            "value": "#{aztenantid}#"
         },
         "accessPolicies": {
             "value": [
                 {
                     "objectId": "#{serviceprincipalobjectid}#",
-                    "tenantId": "#{tenantid}#",
+                    "tenantId": "#{aztenantid}#",
                     "permissions": {
                         "keys": [
                             "Get",
