@@ -1,0 +1,201 @@
+{
+	"category": "Deploy",
+	"description": "Provision an app database and database user.",
+	"friendlyName": "NewAppOnboarding - Provision Database",
+	"iconUrl": "https://cdn.vsassets.io/v/M147_20190226.3/_content/icon-meta-task.png",
+	"inputs": [
+		{
+			"aliases": [],
+			"options": {},
+			"properties": {},
+			"name": "appenvironment",
+			"label": "appenvironment",
+			"defaultValue": "",
+			"required": true,
+			"type": "string",
+			"helpMarkDown": "",
+			"groupName": ""
+		},
+		{
+			"aliases": [],
+			"options": {},
+			"properties": {},
+			"name": "appname",
+			"label": "appname",
+			"defaultValue": "",
+			"required": true,
+			"type": "string",
+			"helpMarkDown": "",
+			"groupName": ""
+		},
+		{
+			"aliases": [],
+			"options": {},
+			"properties": {},
+			"name": "Azure_Subscription",
+			"label": "Azure_Subscription",
+			"defaultValue": "",
+			"required": true,
+			"type": "connectedService:AzureRM",
+			"helpMarkDown": "Target Azure Resource Manager subscription for deploying SQL files",
+			"groupName": ""
+		},
+		{
+			"aliases": [],
+			"options": {},
+			"properties": {},
+			"name": "dbpassword",
+			"label": "dbpassword",
+			"defaultValue": "",
+			"required": true,
+			"type": "string",
+			"helpMarkDown": "",
+			"groupName": ""
+		},
+		{
+			"aliases": [],
+			"options": {},
+			"properties": {},
+			"name": "masterdbpassword",
+			"label": "masterdbpassword",
+			"defaultValue": "",
+			"required": true,
+			"type": "string",
+			"helpMarkDown": "",
+			"groupName": ""
+		},
+		{
+			"aliases": [],
+			"options": {},
+			"properties": {},
+			"name": "orgname",
+			"label": "orgname",
+			"defaultValue": "",
+			"required": true,
+			"type": "string",
+			"helpMarkDown": "",
+			"groupName": ""
+		}
+	],
+	"instanceNameFormat": "Task group: NewAppOnboarding - Provision Database - Copy $(appenvironment)",
+	"name": "NewAppOnboarding - Provision Database - Copy",
+	"parentDefinitionId": null,
+	"runsOn": [
+		"Agent"
+	],
+	"tasks": [
+		{
+			"alwaysRun": false,
+			"condition": "succeeded()",
+			"continueOnError": false,
+			"displayName": "Install SQL Server PowerShell module",
+			"enabled": true,
+			"inputs": {
+				"targetType": "inline",
+				"filePath": "",
+				"arguments": "",
+				"script": "Write-Host \"installing modules: start\"\nInstall-Module -Name SqlServer -Force -AllowClobber\nWrite-Host \"installing modules: end\"",
+				"errorActionPreference": "stop",
+				"failOnStderr": "false",
+				"ignoreLASTEXITCODE": "false",
+				"pwsh": "false",
+				"workingDirectory": ""
+			},
+			"task": {
+				"id": "e213ff0f-5d5c-4791-802d-52ea3e7be1f1",
+				"definitionType": "task",
+				"versionSpec": "2.*"
+			},
+			"timeoutInMinutes": 0,
+			"environment": {}
+		},
+		{
+			"alwaysRun": false,
+			"condition": "succeeded()",
+			"continueOnError": false,
+			"displayName": "Create Database",
+			"enabled": true,
+			"inputs": {
+				"ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+				"ConnectedServiceName": "",
+				"ConnectedServiceNameARM": "$(Azure_Subscription)",
+				"AuthenticationType": "server",
+				"ServerName": "$(orgname)-mendix.database.windows.net",
+				"DatabaseName": "master",
+				"SqlUsername": "mxdbadmin@$(orgname)-mendix",
+				"SqlPassword": "$(masterdbpassword)",
+				"aadSqlUsername": "",
+				"aadSqlPassword": "",
+				"ConnectionString": "Server=$(orgname)-mendix.database.windows.net,1433;Initial Catalog=master;Persist Security Info=False;User ID=mxdbadmin;Password=$(masterdbpassword);MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+				"TaskNameSelector": "InlineSqlTask",
+				"DeploymentAction": "Publish",
+				"DacpacFile": "",
+				"BacpacFile": "",
+				"SqlFile": "",
+				"SqlInline": "CREATE DATABASE [$(appname)-$(appenvironment)]  (SERVICE_OBJECTIVE = ELASTIC_POOL (name = [Mendix-ElasticPool])) WITH CATALOG_COLLATION = SQL_Latin1_General_CP1_CI_AS;\nGO\n",
+				"PublishProfile": "",
+				"AdditionalArguments": "",
+				"SqlAdditionalArguments": "",
+				"InlineAdditionalArguments": "-QueryTimeout 900",
+				"IpDetectionMethod": "AutoDetect",
+				"StartIpAddress": "",
+				"EndIpAddress": "",
+				"DeleteFirewallRule": "true"
+			},
+			"task": {
+				"id": "ce85a08b-a538-4d2b-8589-1d37a9ab970f",
+				"definitionType": "task",
+				"versionSpec": "1.*"
+			},
+			"timeoutInMinutes": 0,
+			"environment": {}
+		},
+		{
+			"alwaysRun": false,
+			"condition": "succeeded()",
+			"continueOnError": false,
+			"displayName": "Create Database user",
+			"enabled": true,
+			"inputs": {
+				"ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+				"ConnectedServiceName": "",
+				"ConnectedServiceNameARM": "$(Azure_Subscription)",
+				"AuthenticationType": "server",
+				"ServerName": "$(orgname)-mendix.database.windows.net",
+				"DatabaseName": "$(appname)-$(appenvironment)",
+				"SqlUsername": "mxdbadmin@$(orgname)-mendix",
+				"SqlPassword": "$(masterdbpassword)",
+				"aadSqlUsername": "",
+				"aadSqlPassword": "",
+				"ConnectionString": "Server=$(orgname)-mendix.database.windows.net,1433;Initial Catalog=$(shortappname)-$(env);Persist Security Info=False;User ID=mxdbadmin;Password=$(masterdbpassword);MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+				"TaskNameSelector": "InlineSqlTask",
+				"DeploymentAction": "Publish",
+				"DacpacFile": "",
+				"BacpacFile": "",
+				"SqlFile": "",
+				"SqlInline": "CREATE USER $(appname)$(appenvironment) WITH PASSWORD = '$(dbpassword)';\nEXEC sp_addrolemember 'db_owner', '$(appname)$(appenvironment)';\nGO",
+				"PublishProfile": "",
+				"AdditionalArguments": "",
+				"SqlAdditionalArguments": "",
+				"InlineAdditionalArguments": "-QueryTimeout 900 -Variable $StringArray",
+				"IpDetectionMethod": "AutoDetect",
+				"StartIpAddress": "",
+				"EndIpAddress": "",
+				"DeleteFirewallRule": "true"
+			},
+			"task": {
+				"id": "ce85a08b-a538-4d2b-8589-1d37a9ab970f",
+				"definitionType": "task",
+				"versionSpec": "1.*"
+			},
+			"timeoutInMinutes": 0,
+			"environment": {}
+		}
+	],
+	"version": {
+		"isTest": false,
+		"major": 1,
+		"minor": 0,
+		"patch": 0
+	}
+}
