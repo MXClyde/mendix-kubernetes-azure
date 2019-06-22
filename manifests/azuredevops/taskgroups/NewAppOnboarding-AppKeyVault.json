@@ -137,25 +137,6 @@
 			"alwaysRun": false,
 			"condition": "succeeded()",
 			"continueOnError": false,
-			"displayName": "echo",
-			"enabled": true,
-			"inputs": {
-				"script": "cat $(System.DefaultWorkingDirectory)/manifests/azure/appkeyvault/parameters.json",
-				"workingDirectory": "",
-				"failOnStderr": "false"
-			},
-			"task": {
-				"id": "d9bafed4-0b18-4f58-968d-86655b4d2ce9",
-				"definitionType": "task",
-				"versionSpec": "2.*"
-			},
-			"timeoutInMinutes": 0,
-			"environment": {}
-		},
-		{
-			"alwaysRun": false,
-			"condition": "succeeded()",
-			"continueOnError": false,
 			"displayName": "Deploy Key Vault",
 			"enabled": true,
 			"inputs": {
