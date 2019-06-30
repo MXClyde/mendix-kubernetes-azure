@@ -86,7 +86,7 @@
 				"versionSpec": "1.12.5",
 				"checkLatest": "false",
 				"specifyLocation": "",
-				"cwd": "$(System.DefaultWorkingDirectory)",
+				"cwd": "",
 				"outputFormat": "json"
 			},
 			"task": {
@@ -134,7 +134,7 @@
 				"versionSpec": "1.12.5",
 				"checkLatest": "false",
 				"specifyLocation": "",
-				"cwd": "$(System.DefaultWorkingDirectory)",
+				"cwd": "",
 				"outputFormat": "json"
 			},
 			"task": {
