@@ -10,9 +10,9 @@ items:
         annotations:
             kubernetes.io/ingress.class: nginx
             kubernetes.io/tls-acme: "#{letsencrypt.enabled}#"
-            nginx.org/client-max-body-size: "500m"
-            nginx.org/proxy-send-timeout: "14400"
-            nginx.org/proxy-read-timeout: "14400"
+            nginx.ingress.kubernetes.io/client-max-body-size: "500m"
+            nginx.ingress.kubernetes.io/proxy-send-timeout: "14400"
+            nginx.ingress.kubernetes.io/proxy-read-timeout: "14400"
         name: ingress-#{appname}#-leader
         namespace: #{k8s.namespace}#
     spec:
@@ -35,9 +35,9 @@ items:
         annotations:
           kubernetes.io/ingress.class: nginx
           kubernetes.io/tls-acme: "#{letsencrypt.enabled}#"
-          nginx.org/client-max-body-size: "500m"
-          nginx.org/proxy-send-timeout: "14400"
-          nginx.org/proxy-read-timeout: "14400"
+          nginx.ingress.kubernetes.io/client-max-body-size: "500m"
+          nginx.ingress.kubernetes.io/proxy-send-timeout: "14400"
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "14400"
         name: ingress-#{appname}#
         namespace: #{k8s.namespace}#
     spec:
