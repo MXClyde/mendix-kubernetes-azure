@@ -25,7 +25,7 @@ items:
         spec:
           securityContext:
             runAsNonRoot: true
-        automountServiceAccountToken: false
+          automountServiceAccountToken: false
           imagePullSecrets:
               - name: registry
           containers:
