@@ -2,13 +2,6 @@
 apiVersion: "v1"
 kind: "List"
 items:
-
-  - apiVersion: v1
-    kind: "Namespace"
-    metadata:
-      name: "#{k8s.namespace}#"
-      labels:
-        name: "#{k8s.namespace}#"
         
   - apiVersion: apps/v1beta1
     kind: "Deployment"
@@ -24,29 +17,37 @@ items:
             ad.datadoghq.com/#{k8s.namespace}#-slave.check_names: "[\"prometheus\"]"
             ad.datadoghq.com/#{k8s.namespace}#-slave.init_configs: "[{}]"
             ad.datadoghq.com/#{k8s.namespace}#-slave.instances: "[{\"prometheus_url\": \"http://%%host%%:%%port%%/metrics\",\"namespace\": \"mendix\",\"metrics\": [\"*\"]}]"
+            devops_release: "#{Release.DeploymentID}#"
           labels:
             name: "#{k8s.namespace}#-slave"
             app: "#{k8s.namespace}#"
             containertype: "slave"
         spec:
+          securityContext:
+            runAsNonRoot: true
+        automountServiceAccountToken: false
           imagePullSecrets:
               - name: registry
           containers:
           - name: #{k8s.namespace}#-slave
+          securityContext:
+               privileged: false
+               runAsNonRoot: true
+               allowPrivilegeEscalation: false
             image: #{docker.registry}#/#{docker.repository}#/#{appname}#:#{Release.Artifacts.DockerBuild.SourceVersion}#-#{Release.Artifacts.DockerBuild.BuildId}#
             ports:
-            - containerPort: 80
+            - containerPort: 8080
             - containerPort: 9273
             livenessProbe:
                httpGet:
                  path: /
-                 port: 80
+                 port: 8080
                initialDelaySeconds: 20
                periodSeconds: 5
             readinessProbe:
                httpGet:
                  path: /
-                 port: 80
+                 port: 8080
                initialDelaySeconds: 20
                periodSeconds: 5
             resources:
@@ -83,6 +84,9 @@ items:
       name: #{k8s.namespace}#-leader
       namespace: #{k8s.namespace}#
     spec:
+      securityContext:
+            runAsNonRoot: true
+      automountServiceAccountToken: false
       replicas: 1 # tells deployment to run 1 pod matching the template
       template: # create pods using pod definition in this template
         metadata:
@@ -91,29 +95,37 @@ items:
             ad.datadoghq.com/#{k8s.namespace}#-leader.check_names: "[\"prometheus\"]"
             ad.datadoghq.com/#{k8s.namespace}#-leader.init_configs: "[{}]"
             ad.datadoghq.com/#{k8s.namespace}#-leader.instances: "[{\"prometheus_url\": \"http://%%host%%:%%port%%/metrics\",\"namespace\": \"mendix\",\"metrics\": [\"*\"]}]"
+           devops_release: "#{Release.DeploymentID}#"
           labels:
             app: "#{k8s.namespace}#"
             containertype: "leader"
             name: "#{k8s.namespace}#-leader"
         spec:
+          securityContext:
+            runAsNonRoot: true
+          automountServiceAccountToken: false
           imagePullSecrets:
               - name: registry
           containers:
           - name: #{k8s.namespace}#-leader
+            securityContext:
+               privileged: false
+               runAsNonRoot: true
+               allowPrivilegeEscalation: false
             image: #{docker.registry}#/#{docker.repository}#/#{appname}#:#{Release.Artifacts.DockerBuild.SourceVersion}#-#{Release.Artifacts.DockerBuild.BuildId}#
             ports:
-            - containerPort: 80
+            - containerPort: 8080
             - containerPort: 9273
             livenessProbe:
                httpGet:
                  path: /
-                 port: 80
+                 port: 8080
                initialDelaySeconds: 20
                periodSeconds: 5
             readinessProbe:
                httpGet:
                  path: /
-                 port: 80
+                 port: 8080
                initialDelaySeconds: 20
                periodSeconds: 5
                failureThreshold: 120 # high number to accomodate database synchronizations
@@ -158,7 +170,9 @@ items:
       selector:
         app: "#{k8s.namespace}#"
       ports:
-      - port: 80
+      - name: http
+        port: 80
+        targetPort: 8080
 
   - apiVersion: "v1"
     kind: "Service"
@@ -172,4 +186,6 @@ items:
         app: "#{k8s.namespace}#"
         containertype: "leader"
       ports:
-      - port: 80
+      - name: http
+        port: 80
+        targetPort: 8080
