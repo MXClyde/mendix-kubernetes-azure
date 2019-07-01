@@ -84,9 +84,6 @@ items:
       name: #{k8s.namespace}#-leader
       namespace: #{k8s.namespace}#
     spec:
-      securityContext:
-            runAsNonRoot: true
-      automountServiceAccountToken: false
       replicas: 1 # tells deployment to run 1 pod matching the template
       template: # create pods using pod definition in this template
         metadata:
