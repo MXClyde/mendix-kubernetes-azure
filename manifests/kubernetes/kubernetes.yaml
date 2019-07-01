@@ -23,9 +23,9 @@ items:
             app: "#{k8s.namespace}#"
             containertype: "slave"
         spec:
+          automountServiceAccountToken: false
           securityContext:
             runAsNonRoot: true
-          automountServiceAccountToken: false
           imagePullSecrets:
               - name: registry
           containers:
@@ -101,9 +101,9 @@ items:
             containertype: "leader"
             name: "#{k8s.namespace}#-leader"
         spec:
+          automountServiceAccountToken: false
           securityContext:
             runAsNonRoot: true
-          automountServiceAccountToken: false
           imagePullSecrets:
               - name: registry
           containers:
