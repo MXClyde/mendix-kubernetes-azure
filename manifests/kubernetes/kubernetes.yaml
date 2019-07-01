@@ -95,7 +95,7 @@ items:
             ad.datadoghq.com/#{k8s.namespace}#-leader.check_names: "[\"prometheus\"]"
             ad.datadoghq.com/#{k8s.namespace}#-leader.init_configs: "[{}]"
             ad.datadoghq.com/#{k8s.namespace}#-leader.instances: "[{\"prometheus_url\": \"http://%%host%%:%%port%%/metrics\",\"namespace\": \"mendix\",\"metrics\": [\"*\"]}]"
-           devops_release: "#{Release.DeploymentID}#"
+            devops_release: "#{Release.DeploymentID}#"
           labels:
             app: "#{k8s.namespace}#"
             containertype: "leader"
