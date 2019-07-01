@@ -30,7 +30,7 @@ items:
               - name: registry
           containers:
           - name: #{k8s.namespace}#-slave
-          securityContext:
+            securityContext:
                privileged: false
                runAsNonRoot: true
                allowPrivilegeEscalation: false
