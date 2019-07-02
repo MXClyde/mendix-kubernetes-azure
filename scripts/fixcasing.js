@@ -1,3 +1,5 @@
+//Fixcasing.js, courtesy of Jelte Lagendijk, https://github.com/jeltemx
+
 const fs = require('fs');
 const args = process.argv;
 
