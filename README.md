@@ -1,3 +1,5 @@
+
+
 # Mendix on Azure Kubernetes Service
 
 This how-to outlines how to deploy a scalable, production-ready Kubernetes cluster for hosting Mendix apps on Microsoft Azure. The solution includes all components necessary to succesfully build and operate Mendix apps on Azure and consists of the following components:
@@ -29,11 +31,22 @@ The Mendix apps will run in Docker containers which will be orchestrated using K
    * **When choosing node size:** keep in mind that Mendix containers typically need relatively more memory vs. CPU. So choosing instance sizes with a higher memory to CPU ratio tends to be more cost efficient (e.g. E2s_v3).
 4. Fill out the authentication information:
    * **With regards to enabling RBAC:** Role-Based Access Control (RBAC) allows you to define security roles within the cluster and assign different cluster permissions to different groups of users, enabling this is required in order to run a secure cluster.
-6. Fill out the network information:
+5. Fill out the network information:
    * **HTTP Application routing:** we disable this as we will deploy an NGINX ingress controller that supports HTTPS later.
    * **Network configuration:** we will select Basic to deploy to a newly created publicly accessible VNet. Specifying an Advanced network configuration is required when we want to deploy to a custom VNet (e.g. a VNet routable over an ExpressRoute).
+ 6. Fill out the network information
+   * Enable this to use the built-in cluster monitoring features of Azure.
  7. Optionally, fill out tags (e.g. for cost tracking)
  8. Confirm your choices to start deployment of the cluster
+
+![Create Kubernetes cluster](images/createkubernetes.png)
+![Authentication options](images/authenticationk8s.png)
+![Networking options](images/networkingkubernetes.png)
+![Monitoring options](images/monitoringk8s.png)
+
+#### Connecting to the Kubernetes cluster
+
+1. After the deployment of the Kubernetes Service,  a resource group will have been created containing the cluster object:
 
  
 ## Known issues
