@@ -129,18 +129,22 @@ We need to create two Generic Service Connections:
 
 **Azure DevOps**
 ![Azure DevOps REST API ](images/sc_api.png)
+
 The URL of this Service Connection is the project URL appended with _apis:
 
 When configuring the Service Connection  you should enter your username combined with the PAT as Password/Token Key.
 
 **Azure DevOps Release Mgmt**
 ![Azure DevOps Release Mgmt REST API ](images/sc_apirm.png)
+
 The configuration of this Service Connection is identical, with one exception: the hostname in the URL is vsrm.dev.azure.com instead of dev.azure.com:
 
 **Kubernetes Service Connection**
 
 Finally, we need to create a Service Connection that allows Azure DevOps to connect to our Kubernetes cluster.
+Create a Service Connection of the type Kubernetes. The field KubeConfig should contain the contents of the kubectl config file which you can find in "your home/profile directory/.kube/config". 
 
+**Note down the GUIDs of all four Service Connections**
 
 **Importing the initial deployment pipelne**
 
@@ -162,4 +166,4 @@ Before we can import the pipeline into Azure DevOps we need to create an
 
  - Document Datadog deployment
  - Document how to use pipelines with other Kubernetes clusters (e.g. AWS EKS)
- - 
+
