@@ -1,3 +1,5 @@
+
+
 # Mendix on Azure Kubernetes Service
 
 This how-to outlines how to deploy a scalable, production-ready Kubernetes cluster for hosting Mendix apps on Microsoft Azure. The solution includes all components necessary to succesfully build and operate Mendix apps on Azure and consists of the following components:
@@ -98,11 +100,11 @@ We will use Azure Devops to automatically deploy the following components:
  - Azure Keyvaults (for master secrets and app-specific secrets)
  - An app onboarding pipeline (for adding new apps to the cluster, it will deploy per app: databases, Azure Blob Storage Accounts,key vaults, build & release pipelines)
 
-#### Setting up an Azure DevOps project
+#### Setting up the Mendix Azure DevOps project
 
 In this how-to we will use Azure DevOps as a CI/CD solution to execute the pipelines. If you know what you are doing, any other CI/CD solution (e.g. Jenkins, Gitlab) can be used instead. But this how-to accompanies fully-working templates for  Azure DevOps.  A free version of Azure Devops can be obtained by creating a new account at [https://dev.azure.com](https://dev.azure.com) .
 
-**Setting up the Mendix Azure DevOps project:**
+**Installing required extensions and configuring Service Connections:**
 
  1. Login to your Azure DevOps environment and create a new project called *Mendix*.
  2.  We need to install some extensions which we will use in our pipelines. This has to be done in the organizational settings pane of Azure Devops. Please install the following extensions from the Azure DevOps marketplace:
@@ -113,12 +115,51 @@ In this how-to we will use Azure DevOps as a CI/CD solution to execute the pipel
 
 **Azure Resource Manager Service Connection**
 
+Create a service connection of the type Azure Resource Manager, connecting Azure DevOps to your Azure subscription. Note the GUID of the service connection, which you will find in the address bar of your browser when the service connection is selected:
+
+![Select type of Service Connection](images/sc_arm.png)
+![ARM SC form](images/sc_armform.png)
+![Get GUID](images/sc_guid.png)
+
+**Azure DevOps REST API Service Connections**
+
+The pipelines we will create in the upcoming steps will use the Azure DevOps REST API to interface with Azure DevOps itself. We need to create two Service Connections (of type *Generic*) for this. Before we can do that, we need to create a Personal Access Token (PAT) for our  current Azure DevOps. Follow the instructions [here](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops#create-personal-access-tokens-to-authenticate-access) to create a PAT with full access (all scopes) and note down the PAT.
+
+We need to create two Generic Service Connections:
+
+**Azure DevOps**
+![Azure DevOps REST API ](images/sc_api.png)
+The URL of this Service Connection is the project URL appended with _apis:
+
+When configuring the Service Connection  you should enter your username combined with the PAT as Password/Token Key.
+
+**Azure DevOps Release Mgmt**
+![Azure DevOps Release Mgmt REST API ](images/sc_apirm.png)
+The configuration of this Service Connection is identical, with one exception: the hostname in the URL is vsrm.dev.azure.com instead of dev.azure.com:
+
+**Kubernetes Service Connection**
+
+Finally, we need to create a Service Connection that allows Azure DevOps to connect to our Kubernetes cluster.
+
+
+**Importing the initial deployment pipelne**
+
+Download and save [the initial deployment pipeline](https://raw.githubusercontent.com/MXClyde/mendix-kubernetes-azure/master/manifests/azuredevops/Initial%20Mendix%20Setup.json) to your computer.
+
+Before we can import the pipeline into Azure DevOps we need to create an 
 
 
 ## Known issues 
 
 
+
 ## Support 
 
+ - Questions / issues with regards to this reference implementation can be raised in the Issues section of this Github repository, they will be answered on a best-effort basis.
+ - The templates published in this repository are **not** a supported Mendix product (although they are in use by several major Mendix customers). I maintain them on a best-effort basis.
 
 ## Roadmap
+
+ - Document Datadog deployment
+ - Document how to use pipelines with other Kubernetes clusters (e.g. AWS EKS)
+ - 
