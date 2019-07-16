@@ -1,5 +1,3 @@
-
-
 # Mendix on Azure Kubernetes Service
 
 This how-to outlines how to deploy a scalable, production-ready Kubernetes cluster for hosting Mendix apps on Microsoft Azure. The solution includes all components necessary to succesfully build and operate Mendix apps on Azure and consists of the following components:
@@ -70,7 +68,7 @@ Web traffic has to flow from outside the cluster towards the right Mendix contai
 
 > helm init --service-account tiller
 
-#### Installing NGINX Ingress Controller
+### Installing NGINX Ingress Controller
 
 1. Install NGINX into the cluster by running:
 
@@ -91,7 +89,7 @@ Web traffic has to flow from outside the cluster towards the right Mendix contai
 
  ![working connection](images/testconn.png)
 
-#### Setting up build and release pipelines using Azure DevOps
+### Setting up build and release pipelines using Azure DevOps
 
 We will use Azure Devops to automatically deploy the following components:
 
@@ -99,6 +97,22 @@ We will use Azure Devops to automatically deploy the following components:
  - Azure Container Registry
  - Azure Keyvaults (for master secrets and app-specific secrets)
  - An app onboarding pipeline (for adding new apps to the cluster, it will deploy per app: databases, Azure Blob Storage Accounts,key vaults, build & release pipelines)
+
+#### Setting up an Azure DevOps project
+
+In this how-to we will use Azure DevOps as a CI/CD solution to execute the pipelines. If you know what you are doing, any other CI/CD solution (e.g. Jenkins, Gitlab) can be used instead. But this how-to accompanies fully-working templates for  Azure DevOps.  A free version of Azure Devops can be obtained by creating a new account at [https://dev.azure.com](https://dev.azure.com) .
+
+**Setting up the Mendix Azure DevOps project:**
+
+ 1. Login to your Azure DevOps environment and create a new project called *Mendix*.
+ 2.  We need to install some extensions which we will use in our pipelines. This has to be done in the organizational settings pane of Azure Devops. Please install the following extensions from the Azure DevOps marketplace:
+
+ ![Azure DevOps extensions](images/devopsext.png)
+
+3. Next, we need to create several Service Connections in our Azure DevOps project and write down the corresponding GUIDs so that they can be leveraged in the pipelines. All service connections 
+
+**Azure Resource Manager Service Connection**
+
 
 
 ## Known issues 
