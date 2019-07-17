@@ -174,7 +174,7 @@ Now execute the pipeline by creating a release and filling out the correct param
 |VS2017_Pool_QueueID|The queue ID of the Visual Studio 2017 agent pool* |
 
 * Queue IDs of Agent Pools can be derived by hovering over the Queue in the Agent Pool settings (located in the Project Settings tab).
-* 
+
 Correctly filled out, it should look like this:
 
 ![Release pipeline settings](images/pipelinesettings.png)
@@ -238,6 +238,6 @@ Executing this release will:
 
 ## Roadmap
 
--  Docuument how to use cert-manager
+-  Document how to use cert-manager
  - Document how to use Azure Insights for monitoring.
  - Document how to use pipelines with other Kubernetes clusters (e.g. AWS EKS).
