@@ -1,3 +1,5 @@
+
+
 # Mendix on Azure Kubernetes Service
 
 This how-to outlines how to deploy a scalable, production-ready Kubernetes cluster for hosting Mendix apps on Microsoft Azure. The solution includes all components necessary to succesfully build and operate Mendix apps on Azure and consists of the following components:
@@ -164,6 +166,7 @@ You will have to manually configure it to use the "Hosted Ubuntu 1604" agent.
 Now execute the pipeline by creating a release and filling out the correct paramete values, as per the table below:
 
 |Variable  |Description  |
+|-----------|------------|
 |Azure_DataResourceGroup|Name of the  resource group in which to deploy databases, key vaults and storage accounts|
 |Azure_DataResourceGroup_Region|  [Azure Region]([https://github.com/BuildAzure/azure-region-map/blob/master/data/azure_regions.json](https://github.com/BuildAzure/azure-region-map/blob/master/data/azure_regions.json)) of data resourcegroup, e.g. *westeurope*|
 |Azure_Subscription| GUID of the Azure Resource Manager Service Connection  |
