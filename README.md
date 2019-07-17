@@ -1,5 +1,3 @@
-
-
 # Mendix on Azure Kubernetes Service
 
 This how-to outlines how to deploy a scalable, production-ready Kubernetes cluster for hosting Mendix apps on Microsoft Azure. The solution includes all components necessary to succesfully build and operate Mendix apps on Azure and consists of the following components:
@@ -142,7 +140,9 @@ The configuration of this Service Connection is identical, with one exception: t
 **Kubernetes Service Connection**
 
 Finally, we need to create a Service Connection that allows Azure DevOps to connect to our Kubernetes cluster.
-Create a Service Connection of the type Kubernetes. The field KubeConfig should contain the contents of the kubectl config file which you can find in "your home/profile directory/.kube/config". 
+Create a Service Connection of the type Kubernetes. The field KubeConfig should contain the contents of the kubectl config file which you can find in "your home/profile directory/.kube/config":
+
+![AKS SC form](images/sc_aks.png)
 
 **Note down the GUIDs of all four Service Connections**
 
@@ -150,7 +150,30 @@ Create a Service Connection of the type Kubernetes. The field KubeConfig should 
 
 Download and save [the initial deployment pipeline](https://raw.githubusercontent.com/MXClyde/mendix-kubernetes-azure/master/manifests/azuredevops/Initial%20Mendix%20Setup.json) to your computer.
 
-Before we can import the pipeline into Azure DevOps we need to create an 
+Before the Azure DevOps UI will show us the option of importing a Release pipeline we need to add an empty Release pipeline. Go ahead and create an empty pipeline:
+
+![Create empty pipeline](images/emptypipeline.gif)
+
+Now import the initial deployment pipeline you downloaded from this repository.
+You will have to manually configure it to use the "Hosted Ubuntu 1604" agent.
+
+![Create empty pipeline](images/selectcorrectagentpool.gif)
+
+**Executing the initial deployment pipeline**
+
+Now execute the pipeline by creating a release and filling out the correct paramete values, as per the table below:
+
+|Variable  |Description  |
+|Azure_DataResourceGroup|Name of the  resource group in which to deploy databases, key vaults and storage accounts|
+|Azure_DataResourceGroup_Region|  [Azure Region]([https://github.com/BuildAzure/azure-region-map/blob/master/data/azure_regions.json](https://github.com/BuildAzure/azure-region-map/blob/master/data/azure_regions.json)) of data resourcegroup, e.g. *westeurope*|
+|Azure_Subscription| GUID of the Azure Resource Manager Service Connection  |
+|AzureDevOps_API_Endpoint| GUID of the Azure DevOps API Service Connection |
+|AzureDevOps_Release_API_Endpoint| GUID of the Azure DevOps Release Management API Service Connection |
+|kubernetes_cluster| GUID of the Kubernetes cluster Service Connection |
+|orgname| Select a short orgname (<10 characters) that will be used  |
+|Ubuntu_Pool_QueueID|The queue ID of the Hosted Ubuntu agent pool |
+|VS2017_Pool_QueueID|The queue ID of the Visual Studio 2017 agent pool |
+
 
 
 ## Known issues 
@@ -166,4 +189,4 @@ Before we can import the pipeline into Azure DevOps we need to create an
 
  - Document Datadog deployment
  - Document how to use pipelines with other Kubernetes clusters (e.g. AWS EKS)
-
+ - 
