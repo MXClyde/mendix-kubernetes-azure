@@ -2,7 +2,7 @@
 
 This how-to outlines how to deploy a scalable, production-ready Kubernetes cluster for hosting Mendix apps on Microsoft Azure. The solution includes all components necessary to succesfully build and operate Mendix apps on Azure and consists of the following components:
 
-![Mendix on Azure](mendixazure.png)
+![Mendix on Azure](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/mendixazure.png)
 
 ## Features of the solution:
 
