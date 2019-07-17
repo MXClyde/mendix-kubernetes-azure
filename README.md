@@ -26,20 +26,20 @@ The Mendix apps will run in Docker containers which will be orchestrated using K
 2. Start the wizard to create an Azure Kubernetes Service.
 3. Fill out the basic information:
    * **When choosing node size:** keep in mind that Mendix containers typically need relatively more memory vs. CPU. So choosing instance sizes with a higher memory to CPU ratio tends to be more cost efficient (e.g. E2s_v3).
-![Create Kubernetes cluster](images/createkubernetes.png)
+![Create Kubernetes cluster](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/createkubernetes.png)
 4. Fill out the scaling information:
    * **With regards to enabling Virtual Nodes:** The Virtual nodes option allows containers to be directly scheduled on [Azure Container Instances](https://azure.microsoft.com/en-us/services/container-instances/). We will not use this option in this how-to. Since Mendix containers typically run 24/7, using VMs as dedicated agent nodes is typically more cost-effective.
    * **With regards to enabling VM Scale Sets:** We will not enable VM scale sets in this how-to as the feature is stil in Preview. It promises a lot more flexibility and can be valuable in the future.
 5. Fill out the authentication information:
    * **With regards to enabling RBAC:** Role-Based Access Control (RBAC) allows you to define security roles within the cluster and assign different cluster permissions to different groups of users. Enabling this is required in order to run a secure cluster.
-![Authentication options](images/authenticationk8s.png)
+![Authentication options](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/authenticationk8s.png)
 6. Fill out the network information:
    * **HTTP Application routing:** we disable this as we will deploy an NGINX ingress controller that supports HTTPS later.
    * **Network configuration:** we will select Basic to deploy to a newly created VNet. Specifying an Advanced network configuration is required when we want to deploy to a custom VNet (e.g. a VNet routable over an ExpressRoute).
-![Networking options](images/networkingkubernetes.png)
+![Networking options](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/networkingkubernetes.png)
  7. Fill out the monitoring information
     * Enable this to use the built-in cluster monitoring features of Azure.
-![Monitoring options](images/monitoringk8s.png)
+![Monitoring options](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/monitoringk8s.png)
  8. Optionally, fill out tags (e.g. for cost tracking)
  9. Confirm your choices to start deployment of the cluster
 
@@ -47,7 +47,7 @@ The Mendix apps will run in Docker containers which will be orchestrated using K
 
 1. After the deployment of the Kubernetes Service,  a resource group will have been created containing the cluster object:
 
-![Monitoring options](images/clusterobject.png) 
+![Monitoring options](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/clusterobject.png) 
 
 2. [Open the Kubernetes Dashboard](https://docs.microsoft.com/nl-nl/azure/aks/kubernetes-dashboard) 
 3. The cluster has been deployed successfully and can be managed from your workstation!
@@ -72,7 +72,7 @@ Web traffic has to flow from outside the cluster towards the right Mendix contai
 
 >     helm install stable/nginx-ingress
 
- ![Helm output](images/helmoutput.png)
+ ![Helm output](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/helmoutput.png)
  
  2. (Optional) In case you deployed on an internal VNet, be sure to add the _service.beta.kubernetes.io/azure-load-balancer-internal: "true"_ annotation as outlined here_:_ [https://docs.microsoft.com/en-us/azure/aks/internal-lb](https://docs.microsoft.com/en-us/azure/aks/internal-lb)
  3. After a few minutes, run: 
@@ -81,11 +81,11 @@ Web traffic has to flow from outside the cluster towards the right Mendix contai
 
 4. The output should contain the external IP address of the load balancer
 
- ![Helm output](images/extserv.png)
+ ![Helm output](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/extserv.png)
 
 5. By opening this URL in your browser, you can verify communication from your workstation to the cluster is fully functioning:
 
- ![working connection](images/testconn.png)
+ ![working connection](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/testconn.png)
 
 ### Step C. Setting up build and release pipelines using Azure DevOps
 
@@ -105,7 +105,7 @@ In this how-to we will use Azure DevOps as a CI/CD solution to execute the pipel
  1. Login to your Azure DevOps environment and create a new project called *Mendix*.
  2.  We need to install some extensions which we will use in our pipelines. This has to be done in the organizational settings pane of Azure Devops. Please install the following extensions from the Azure DevOps marketplace:
 
- ![Azure DevOps extensions](images/devopsext.png)
+ ![Azure DevOps extensions](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/devopsext.png)
 
 3. Next, we need to create several Service Connections in our Azure DevOps project and write down the corresponding GUIDs so that they can be leveraged in the pipelines. 
 
@@ -113,9 +113,9 @@ In this how-to we will use Azure DevOps as a CI/CD solution to execute the pipel
 
 Create a service connection of the type Azure Resource Manager, connecting Azure DevOps to your Azure subscription. Record the GUID of the service connection, which you will find in the address bar of your browser when the service connection is selected:
 
-![Select type of Service Connection](images/sc_arm.png)
-![ARM SC form](images/sc_armform.png)
-![Get GUID](images/sc_guid.png)
+![Select type of Service Connection](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/sc_arm.png)
+![ARM SC form](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/sc_armform.png)
+![Get GUID](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/sc_guid.png)
 
 **Azure DevOps REST API Service Connections**
 
@@ -124,14 +124,14 @@ The pipelines we will create in the upcoming steps will use the Azure DevOps RES
 We need to create two Generic Service Connections:
 
 **Azure DevOps**
-![Azure DevOps REST API ](images/sc_api.png)
+![Azure DevOps REST API ](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/sc_api.png)
 
 The URL of this Service Connection is the project URL appended with _apis:
 
 When configuring the Service Connection  you should enter your username combined with the PAT as Password/Token Key.
 
 **Azure DevOps Release Mgmt**
-![Azure DevOps Release Mgmt REST API ](images/sc_apirm.png)
+![Azure DevOps Release Mgmt REST API ](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/sc_apirm.png)
 
 The configuration of this Service Connection is identical, with one exception: the hostname in the URL is vsrm.dev.azure.com instead of dev.azure.com:
 
@@ -140,7 +140,7 @@ The configuration of this Service Connection is identical, with one exception: t
 Finally, we need to create a Service Connection that allows Azure DevOps to connect to our Kubernetes cluster.
 Create a Service Connection of the type Kubernetes. The field KubeConfig should contain the contents of the kubectl config file which you can find in "your home/profile directory/.kube/config":
 
-![AKS SC form](images/sc_aks.png)
+![AKS SC form](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/sc_k8s.png)
 
 **Note down the GUIDs of all four Service Connections**
 
@@ -150,12 +150,12 @@ Download and save [the initial deployment pipeline](https://raw.githubuserconten
 
 In order for the Azure DevOps UI to show us the option of importing a Release pipeline, we need to add an empty Release pipeline. Go ahead and create an empty pipeline:
 
-![Create empty pipeline](images/emptypipeline.gif)
+![Create empty pipeline](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/emptypipeline.gif)
 
 Now import the initial deployment pipeline file you downloaded from this repository.
 During the  import process, you will have to manually configure it to use the "Hosted Ubuntu 1604" agent.
 
-![Create empty pipeline](images/selectcorrectagentpool.gif)
+![Create empty pipeline](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/selectcorrectagentpool.gif)
 
 **Executing the initial deployment pipeline**
 
@@ -174,10 +174,10 @@ Now execute the pipeline by creating a release and filling out the correct param
 |VS2017_Pool_QueueID|The queue ID of the Visual Studio 2017 agent pool* |
 
 * Queue IDs of Agent Pools can be derived by hovering over the Queue in the Agent Pool settings (located in the Project Settings tab).
-* 
+
 Correctly filled out, it should look like this:
 
-![Release pipeline settings](images/pipelinesettings.png)
+![Release pipeline settings](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/pipelinesettings.png)
 
 Executing this pipeline will:
 
@@ -203,7 +203,7 @@ Onboard a new app by creating a new release of the "New app onboarding pipeline"
 
 Correctly filled out it should look like:
 
-![New app Release pipeline settings](images/newappsettings.png)
+![New app Release pipeline settings](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/newappsettings.png)
 
 Executing this release will:
 
@@ -238,6 +238,6 @@ Executing this release will:
 
 ## Roadmap
 
--  Docuument how to use cert-manager
+-  Document how to use cert-manager
  - Document how to use Azure Insights for monitoring.
  - Document how to use pipelines with other Kubernetes clusters (e.g. AWS EKS).
