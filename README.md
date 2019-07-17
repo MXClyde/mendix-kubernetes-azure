@@ -213,7 +213,7 @@ Executing this release will:
 - Provision Kubernetes namespaces for acceptance and production environments
 - Provision apps-specific build & release pipelines
 
-### Step D.Adding extended logging & metrics using Datadog
+### Step D. Adding extended logging & metrics using Datadog
 
  
 
