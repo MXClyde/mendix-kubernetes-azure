@@ -16,7 +16,7 @@ This how-to outlines how to deploy a scalable, production-ready Kubernetes clust
 
 - Account with Owner role assignment on the target Azure Subscription.
 
-### Deploying Container Platform (Azure Kubernetes Service)
+### Step A. Deploying Container Platform (Azure Kubernetes Service)
 
 The Mendix apps will run in Docker containers which will be orchestrated using Kubernetes. For this purpose we are going to deploy Azure Kubernetes Service, which will provide us with a managed Kubernetes cluster to host our app containers.
 
@@ -52,7 +52,7 @@ The Mendix apps will run in Docker containers which will be orchestrated using K
 2. [Open the Kubernetes Dashboard](https://docs.microsoft.com/nl-nl/azure/aks/kubernetes-dashboard) 
 3. The cluster has been deployed successfully and can be managed from your workstation!
 
-### Deploying the cluster load balancer (NGINX Ingress Controller)
+### Step B. Deploying the cluster load balancer (NGINX Ingress Controller)
 
 Web traffic has to flow from outside the cluster towards the right Mendix containers in the cluster. In the Kubernetes world, this is handled by an ingress controller. We will deploy the NGINX ingress controller into the cluster. We will do this using Helm, the package manager for Kubernetes.
 
@@ -66,7 +66,7 @@ Web traffic has to flow from outside the cluster towards the right Mendix contai
 
 > helm init --service-account tiller
 
-### Installing NGINX Ingress Controller
+#### Installing NGINX Ingress Controller
 
 1. Install NGINX into the cluster by running:
 
@@ -87,7 +87,7 @@ Web traffic has to flow from outside the cluster towards the right Mendix contai
 
  ![working connection](images/testconn.png)
 
-### Setting up build and release pipelines using Azure DevOps
+### Step C. Setting up build and release pipelines using Azure DevOps
 
 We will use Azure Devops to automatically deploy the following components:
 
@@ -213,7 +213,7 @@ Executing this release will:
 - Provision Kubernetes namespaces for acceptance and production environments
 - Provision apps-specific build & release pipelines
 
-### Adding extended logging & metrics using Datadog
+### Step D.Adding extended logging & metrics using Datadog
 
  
 
