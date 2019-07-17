@@ -174,9 +174,41 @@ Now execute the pipeline by creating a release and filling out the correct param
 |AzureDevOps_Release_API_Endpoint| GUID of the Azure DevOps Release Management API Service Connection |
 |kubernetes_cluster| GUID of the Kubernetes cluster Service Connection |
 |orgname| Select a short orgname (<10 characters) that will be used  |
-|Ubuntu_Pool_QueueID|The queue ID of the Hosted Ubuntu agent pool |
-|VS2017_Pool_QueueID|The queue ID of the Visual Studio 2017 agent pool |
+|Ubuntu_Pool_QueueID|The queue ID of the Hosted Ubuntu agent pool* |
+|VS2017_Pool_QueueID|The queue ID of the Visual Studio 2017 agent pool* |
 
+* Queue IDs of Agent Pools can be derived by hovering 
+Correctly filled out, it looks like this:
+
+![Release pipeline settings](images/pipelinesettings.png)
+
+Executing this pipeline will:
+
+ - Deploy a master key vault to store service credetnials
+ - Deploy an Azure SQL Server and Elastic Pool to host app databases.
+ - Deploy Azure Container Registry to host app Docker images
+ - Deploy a "New App Onboarding pipeline" which will allow you to add new Mendix apps to your environment.
+
+**Onboarding a new app**
+
+Onboard a new app by creating a new release of the "New app onboarding pipeline". It takes the following arguments:
+
+|Variable  |Description  |
+|--|--|
+|appfqdn_accp | The FQDN for the acceptance environment of the app |
+|appfqdn_accp_leader| The FQDN for targetting only the leader container of the acceptance environment (e.g. for reaching the debugger endpoint consistently)|
+|appfqdn_prod| The FQDN for the production environment of the app|
+|appfqdn_prod_leader|  The FQDN for targetting only the leader container of the production environment|
+|appname| appname (should be short, < 8 characters)|
+|ts_password| Mendix Team Server password to be used to access app model|
+|ts_url| URL for app repository on Mendix Team Server|
+|ts_username| Mendix Team Server username to be used to access app model|
+
+Correctly filled out it should look like:
+
+![New app Release pipeline settings](images/newappsettings.png)
+
+Executing this release will:
 
 
 ## Known issues 
