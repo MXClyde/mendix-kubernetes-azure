@@ -10,7 +10,7 @@ This how-to outlines how to deploy a scalable, production-ready Kubernetes clust
 - Utilize standard Azure services to ensure stability, support and cost-effectiveness.
 - Utilize Azure  DevOps for automated deployments, fully in control of your team.
 
-## How to deploy
+## How to deploy the solution
 
 ### Prerequisites
 
@@ -229,7 +229,7 @@ Executing this release will:
 
 ## Known issues 
 
-
+## Frequently Asked Questions
 
 ## Support 
 
@@ -241,4 +241,3 @@ Executing this release will:
 -  Docuument how to use cert-manager
  - Document how to use Azure Insights for monitoring.
  - Document how to use pipelines with other Kubernetes clusters (e.g. AWS EKS).
- - 
