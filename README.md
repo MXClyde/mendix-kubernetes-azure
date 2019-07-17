@@ -227,6 +227,7 @@ Executing this release will:
 >  kubectl create -f datadog-rbac.yaml
 
 5. Within minutes, logging and metrics should start appearing in Datadog.
+
 ## Known issues 
 
 
@@ -238,5 +239,6 @@ Executing this release will:
 
 ## Roadmap
 
+-  Docuument how to use cert-manager
  - Document how to use Azure Insights for monitoring.
  - Document how to use pipelines with other Kubernetes clusters (e.g. AWS EKS).
