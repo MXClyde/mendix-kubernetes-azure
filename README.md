@@ -140,7 +140,7 @@ The configuration of this Service Connection is identical, with one exception: t
 Finally, we need to create a Service Connection that allows Azure DevOps to connect to our Kubernetes cluster.
 Create a Service Connection of the type Kubernetes. The field KubeConfig should contain the contents of the kubectl config file which you can find in "your home/profile directory/.kube/config":
 
-![AKS SC form](images/sc_aks.png)
+![AKS SC form](images/sc_k8s.png)
 
 **Note down the GUIDs of all four Service Connections**
 
