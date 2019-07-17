@@ -1,5 +1,3 @@
-
-
 # Mendix on Azure Kubernetes Service
 
 This how-to outlines how to deploy a scalable, production-ready Kubernetes cluster for hosting Mendix apps on Microsoft Azure. The solution includes all components necessary to succesfully build and operate Mendix apps on Azure and consists of the following components:
@@ -210,7 +208,25 @@ Correctly filled out it should look like:
 
 Executing this release will:
 
+- Provision app-specific Key Vaults
+- Provision app-specific databases
+- Provision app-specific (Blob) Storage Accounts
+- Provision Kubernetes namespaces for acceptance and production environments
+- Provision apps-specific build & release pipelines
 
+### Adding extended logging & metrics using Datadog
+
+ 
+
+ 1. Create a Datadog (trial) account at [http://www.datadoghq.com](http://www.datadoghq.com) and get the API key.
+ 2. Download the Datadog templates from manifests/kubernetes/datadog in this repository.
+ 3. Insert the Datadog API key in line 26 of datadog.yaml
+ 4. Apply both manifests to your clusters
+
+>  kubectl create -f datadog.yaml  
+>  kubectl create -f datadog-rbac.yaml
+
+5. Within minutes, logging and metrics should start appearing in Datadog.
 ## Known issues 
 
 
@@ -222,6 +238,5 @@ Executing this release will:
 
 ## Roadmap
 
- - Document Datadog deployment
- - Document how to use pipelines with other Kubernetes clusters (e.g. AWS EKS)
- - 
+ - Document how to use Azure Insights for monitoring.
+ - Document how to use pipelines with other Kubernetes clusters (e.g. AWS EKS).
