@@ -238,7 +238,7 @@ Executing this release will:
 
 ## Roadmap
 
--  Document how to use cert-manager
+-  Document how to use cert-manager for automatic provisioning of SSL certificates using Let's Encrypt
  - Document how to use Azure Insights for monitoring.
  - Document how to use pipelines with other Kubernetes clusters (e.g. AWS EKS).
 -  Document cluster configuration backups using Velero
