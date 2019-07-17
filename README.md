@@ -7,15 +7,14 @@ This how-to outlines how to deploy a scalable, production-ready Kubernetes clust
 ## Features of the solution:
 
 - Host Mendix apps in a secure, scalable and managed environment.
-- Utilize standard Azure services to ensure cost-effectiveness
-- Utilize Azure  DevOps for automated deployments, fully in control of your team
+- Utilize standard Azure services to ensure stability, support and cost-effectiveness.
+- Utilize Azure  DevOps for automated deployments, fully in control of your team.
 
 ## How to deploy
 
 ### Prerequisites
 
 - Account with Owner role assignment on the target Azure Subscription.
-
 
 ### Deploying Container Platform (Azure Kubernetes Service)
 
@@ -29,10 +28,10 @@ The Mendix apps will run in Docker containers which will be orchestrated using K
    * **When choosing node size:** keep in mind that Mendix containers typically need relatively more memory vs. CPU. So choosing instance sizes with a higher memory to CPU ratio tends to be more cost efficient (e.g. E2s_v3).
 ![Create Kubernetes cluster](images/createkubernetes.png)
 4. Fill out the scaling information:
-   * **With regards to enabling Virtual Nodes:** The Virtual nodes option allows container to be directly scheduled on [Azure Container Instances](https://azure.microsoft.com/en-us/services/container-instances/). We will not use this option in this how-to. Since Mendix containers typically run 24/7, using VMs as dedicated agent nodes is typically more cost-effective.
+   * **With regards to enabling Virtual Nodes:** The Virtual nodes option allows containers to be directly scheduled on [Azure Container Instances](https://azure.microsoft.com/en-us/services/container-instances/). We will not use this option in this how-to. Since Mendix containers typically run 24/7, using VMs as dedicated agent nodes is typically more cost-effective.
    * **With regards to enabling VM Scale Sets:** We will not enable VM scale sets in this how-to as the feature is stil in Preview. It promises a lot more flexibility and can be valuable in the future.
 5. Fill out the authentication information:
-   * **With regards to enabling RBAC:** Role-Based Access Control (RBAC) allows you to define security roles within the cluster and assign different cluster permissions to different groups of users, enabling this is required in order to run a secure cluster.
+   * **With regards to enabling RBAC:** Role-Based Access Control (RBAC) allows you to define security roles within the cluster and assign different cluster permissions to different groups of users. Enabling this is required in order to run a secure cluster.
 ![Authentication options](images/authenticationk8s.png)
 6. Fill out the network information:
    * **HTTP Application routing:** we disable this as we will deploy an NGINX ingress controller that supports HTTPS later.
@@ -48,7 +47,6 @@ The Mendix apps will run in Docker containers which will be orchestrated using K
 
 1. After the deployment of the Kubernetes Service,  a resource group will have been created containing the cluster object:
 
-
 ![Monitoring options](images/clusterobject.png) 
 
 2. [Open the Kubernetes Dashboard](https://docs.microsoft.com/nl-nl/azure/aks/kubernetes-dashboard) 
@@ -56,7 +54,7 @@ The Mendix apps will run in Docker containers which will be orchestrated using K
 
 ### Deploying the cluster load balancer (NGINX Ingress Controller)
 
-Web traffic has to flow from outside the cluster towards the right Mendix containers in the cluster. In the Kubernetes world, this is handled by an ingress controller. We will deploy the NGINX ingress controller into the cluster. We will do this using helm, the package manager for Kubernetes.
+Web traffic has to flow from outside the cluster towards the right Mendix containers in the cluster. In the Kubernetes world, this is handled by an ingress controller. We will deploy the NGINX ingress controller into the cluster. We will do this using Helm, the package manager for Kubernetes.
 
 ##### Installing Helm
 
@@ -109,11 +107,11 @@ In this how-to we will use Azure DevOps as a CI/CD solution to execute the pipel
 
  ![Azure DevOps extensions](images/devopsext.png)
 
-3. Next, we need to create several Service Connections in our Azure DevOps project and write down the corresponding GUIDs so that they can be leveraged in the pipelines. All service connections 
+3. Next, we need to create several Service Connections in our Azure DevOps project and write down the corresponding GUIDs so that they can be leveraged in the pipelines. 
 
 **Azure Resource Manager Service Connection**
 
-Create a service connection of the type Azure Resource Manager, connecting Azure DevOps to your Azure subscription. Note the GUID of the service connection, which you will find in the address bar of your browser when the service connection is selected:
+Create a service connection of the type Azure Resource Manager, connecting Azure DevOps to your Azure subscription. Record the GUID of the service connection, which you will find in the address bar of your browser when the service connection is selected:
 
 ![Select type of Service Connection](images/sc_arm.png)
 ![ARM SC form](images/sc_armform.png)
@@ -150,39 +148,40 @@ Create a Service Connection of the type Kubernetes. The field KubeConfig should 
 
 Download and save [the initial deployment pipeline](https://raw.githubusercontent.com/MXClyde/mendix-kubernetes-azure/master/manifests/azuredevops/Initial%20Mendix%20Setup.json) to your computer.
 
-Before the Azure DevOps UI will show us the option of importing a Release pipeline we need to add an empty Release pipeline. Go ahead and create an empty pipeline:
+In order for the Azure DevOps UI to show us the option of importing a Release pipeline, we need to add an empty Release pipeline. Go ahead and create an empty pipeline:
 
 ![Create empty pipeline](images/emptypipeline.gif)
 
-Now import the initial deployment pipeline you downloaded from this repository.
-You will have to manually configure it to use the "Hosted Ubuntu 1604" agent.
+Now import the initial deployment pipeline file you downloaded from this repository.
+During the  import process, you will have to manually configure it to use the "Hosted Ubuntu 1604" agent.
 
 ![Create empty pipeline](images/selectcorrectagentpool.gif)
 
 **Executing the initial deployment pipeline**
 
-Now execute the pipeline by creating a release and filling out the correct paramete values, as per the table below:
+Now execute the pipeline by creating a release and filling out the correct parameter values, as per the table below:
 
 |Variable  |Description  |
 |-----------|------------|
 |Azure_DataResourceGroup|Name of the  resource group in which to deploy databases, key vaults and storage accounts|
-|Azure_DataResourceGroup_Region|  [Azure Region]([https://github.com/BuildAzure/azure-region-map/blob/master/data/azure_regions.json](https://github.com/BuildAzure/azure-region-map/blob/master/data/azure_regions.json)) of data resourcegroup, e.g. *westeurope*|
-|Azure_Subscription| GUID of the Azure Resource Manager Service Connection  |
-|AzureDevOps_API_Endpoint| GUID of the Azure DevOps API Service Connection |
-|AzureDevOps_Release_API_Endpoint| GUID of the Azure DevOps Release Management API Service Connection |
-|kubernetes_cluster| GUID of the Kubernetes cluster Service Connection |
-|orgname| Select a short orgname (<10 characters) that will be used  |
+|Azure_DataResourceGroup_Region|  [Azure Region]([https://github.com/BuildAzure/azure-region-map/blob/master/data/azure_regions.json](https://github.com/BuildAzure/azure-region-map/blob/master/data/azure_regions.json)) of the data resourcegroup (this is the resource group in which all database-, storage- and key vault resources will be created), e.g. *westeurope*|
+|Azure_Subscription| GUID of the Azure Resource Manager Service Connection, created in the previous section  |
+|AzureDevOps_API_Endpoint| GUID of the Azure DevOps API Service Connection, created in the previous section |
+|AzureDevOps_Release_API_Endpoint| GUID of the Azure DevOps Release Management API Service Connection, created in the previous section |
+|kubernetes_cluster| GUID of the Kubernetes cluster Service Connection, created in the previous section |
+|orgname| Select a short organizational name (<10 characters) that will be used in the various  deployed resources (to ensure global uniqueness on Azure)|
 |Ubuntu_Pool_QueueID|The queue ID of the Hosted Ubuntu agent pool* |
 |VS2017_Pool_QueueID|The queue ID of the Visual Studio 2017 agent pool* |
 
-* Queue IDs of Agent Pools can be derived by hovering 
-Correctly filled out, it looks like this:
+* Queue IDs of Agent Pools can be derived by hovering over the Queue in the Agent Pool settings (located in the Project Settings tab).
+* 
+Correctly filled out, it should look like this:
 
 ![Release pipeline settings](images/pipelinesettings.png)
 
 Executing this pipeline will:
 
- - Deploy a master key vault to store service credetnials
+ - Deploy a master key vault to store service credentials
  - Deploy an Azure SQL Server and Elastic Pool to host app databases.
  - Deploy Azure Container Registry to host app Docker images
  - Deploy a "New App Onboarding pipeline" which will allow you to add new Mendix apps to your environment.
@@ -197,10 +196,10 @@ Onboard a new app by creating a new release of the "New app onboarding pipeline"
 |appfqdn_accp_leader| The FQDN for targetting only the leader container of the acceptance environment (e.g. for reaching the debugger endpoint consistently)|
 |appfqdn_prod| The FQDN for the production environment of the app|
 |appfqdn_prod_leader|  The FQDN for targetting only the leader container of the production environment|
-|appname| appname (should be short, < 8 characters)|
-|ts_password| Mendix Team Server password to be used to access app model|
-|ts_url| URL for app repository on Mendix Team Server|
-|ts_username| Mendix Team Server username to be used to access app model|
+|appname| Application Name (should be short, < 8 characters)|
+|ts_password| Mendix Team Server password to be used to retrieve the app model|
+|ts_url| URL of app repository on the Mendix Team Server (can be fetched from the Team Server tab on the project page at the Mendix Developer portal/Sprintr)|
+|ts_username| Mendix Team Server username to be used to retrieve the app model|
 
 Correctly filled out it should look like:
 
@@ -242,3 +241,4 @@ Executing this release will:
 -  Docuument how to use cert-manager
  - Document how to use Azure Insights for monitoring.
  - Document how to use pipelines with other Kubernetes clusters (e.g. AWS EKS).
+ - 
