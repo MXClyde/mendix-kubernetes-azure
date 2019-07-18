@@ -236,9 +236,10 @@ Executing this release will:
  - Questions / issues with regards to this reference implementation can be raised in the Issues section of this Github repository, they will be answered on a best-effort basis.
  - The templates published in this repository are **not** a supported Mendix product (although they are in use by several major Mendix customers). I maintain them on a best-effort basis.
 
-## Roadmap
+## Roadmap of this solution
 
+- Document custom runtime settings, license activation etc.
 -  Document how to use cert-manager for automatic provisioning of SSL certificates using Let's Encrypt
- - Document how to use Azure Insights for monitoring.
- - Document how to use pipelines with other Kubernetes clusters (e.g. AWS EKS).
+- Document how to use Azure Insights for monitoring.
+- Document how to use pipelines with other Kubernetes clusters (e.g. AWS EKS).
 -  Document cluster configuration backups using Velero
