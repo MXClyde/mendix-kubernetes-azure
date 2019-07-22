@@ -23,6 +23,18 @@ items:
             app: "#{k8s.namespace}#"
             containertype: "slave"
         spec:
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+              - weight: 100
+                podAffinityTerm:
+                  labelSelector:
+                    matchExpressions:
+                      - key: "app"
+                        operator: In
+                        values:
+                        - "#{k8s.namespace}#"
+                  topologyKey: "kubernetes.io/hostname"
           automountServiceAccountToken: false
           securityContext:
             runAsNonRoot: true
@@ -98,6 +110,18 @@ items:
             containertype: "leader"
             name: "#{k8s.namespace}#-leader"
         spec:
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+              - weight: 100
+                podAffinityTerm:
+                  labelSelector:
+                    matchExpressions:
+                      - key: "app"
+                        operator: In
+                        values:
+                        - "#{k8s.namespace}#"
+                  topologyKey: "kubernetes.io/hostname"
           automountServiceAccountToken: false
           securityContext:
             runAsNonRoot: true
