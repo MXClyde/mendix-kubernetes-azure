@@ -15,6 +15,8 @@ This how-to outlines how to deploy a scalable, production-ready Kubernetes clust
 ### Prerequisites
 
 - Account with Owner role assignment on the target Azure Subscription.
+- Azure DevOps or Azure DevOps Server administrator access (needed to install Extensions)
+- App DNS records and SSL certificates (can be wildcards)
 
 ### Step A. Deploying Container Platform (Azure Kubernetes Service)
 
