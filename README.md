@@ -31,7 +31,7 @@ The Mendix apps will run in Docker containers which will be orchestrated using K
 ![Create Kubernetes cluster](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/createkubernetes.png)
 4. Fill out the scaling information:
    * **With regards to enabling Virtual Nodes:** The Virtual nodes option allows containers to be directly scheduled on [Azure Container Instances](https://azure.microsoft.com/en-us/services/container-instances/). We will not use this option in this how-to. Since Mendix containers typically run 24/7, using VMs as dedicated agent nodes is typically more cost-effective.
-   * **With regards to enabling VM Scale Sets:** We will not enable VM scale sets in this how-to as the feature is stil in Preview. It promises a lot more flexibility and can be valuable in the future. *update 10/2019: this feature is now out of preview, it is recommended to enable it on new clusters in order to utilize this flexibility*
+   * **With regards to enabling VM Scale Sets:** VM Scale Sets can safely be enabled as they allow more flexibility in scaling the cluster at a later stage.
 5. Fill out the authentication information:
    * **With regards to enabling RBAC:** Role-Based Access Control (RBAC) allows you to define security roles within the cluster and assign different cluster permissions to different groups of users. Enabling this is required in order to run a secure cluster.
 ![Authentication options](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/authenticationk8s.png)
@@ -130,7 +130,7 @@ We need to create two Generic Service Connections:
 
 The URL of this Service Connection is the project URL appended with _apis:
 
-When configuring the Service Connection  you should enter your username combined with the PAT as Password/Token Key.
+When configuring the Service Connection, you can leave username empty and use the PAT as Password/Token Key.
 
 **Azure DevOps Release Mgmt**
 ![Azure DevOps Release Mgmt REST API ](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/sc_apirm.png)
@@ -144,7 +144,7 @@ Create a Service Connection of the type Kubernetes. The field KubeConfig should 
 
 ![AKS SC form](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/sc_k8s.png)
 
-**Note down the GUIDs of all four Service Connections**
+**Note down the GUIDs of all four created Service Connections. you will use them in the next step**
 
 **Importing the initial deployment pipelne**
 
@@ -167,13 +167,12 @@ Now execute the pipeline by creating a release and filling out the correct param
 |-----------|------------|
 |Azure_DataResourceGroup|Name of the  resource group in which to deploy databases, key vaults and storage accounts|
 |Azure_DataResourceGroup_Region|  [Azure Region]([https://github.com/BuildAzure/azure-region-map/blob/master/data/azure_regions.json](https://github.com/BuildAzure/azure-region-map/blob/master/data/azure_regions.json)) of the data resourcegroup (this is the resource group in which all database-, storage- and key vault resources will be created), e.g. *westeurope*|
-|Azure_Subscription| GUID of the Azure Resource Manager Service Connection, created in the previous section  |
+|Azure_Subscription| GUID of the Azure Resource Manager Service Connection, created in the previous section  *be careful to use the GUID of the Service Connection, not of the subscription itself*|
 |AzureDevOps_API_Endpoint| GUID of the Azure DevOps API Service Connection, created in the previous section |
 |AzureDevOps_Release_API_Endpoint| GUID of the Azure DevOps Release Management API Service Connection, created in the previous section |
 |kubernetes_cluster| GUID of the Kubernetes cluster Service Connection, created in the previous section |
 |orgname| Select a short organizational name (<10 characters) that will be used in the various  deployed resources (to ensure global uniqueness on Azure)|
-|Ubuntu_Pool_QueueID|The queue ID of the Hosted Ubuntu agent pool* |
-|VS2017_Pool_QueueID|The queue ID of the Visual Studio 2017 agent pool* |
+|AzurePipelines_Pool_QueueID|The queue ID of the "Azure Pipelines" agent pool* |
 
 * Queue IDs of Agent Pools can be derived by hovering over the Queue in the Agent Pool settings (located in the Project Settings tab).
 
