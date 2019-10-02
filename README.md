@@ -177,6 +177,8 @@ Now execute the pipeline by creating a release and filling out the correct param
 
 * Queue IDs of Agent Pools can be derived by hovering over the Queue in the Agent Pool settings (located in the Project Settings tab).
 
+![Find Azure Pipelines queue ID](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/findazurepipelines.png)
+
 Correctly filled out, it should look like this:
 
 ![Release pipeline settings](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/pipelinesettings.png)
