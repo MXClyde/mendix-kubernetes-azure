@@ -17,6 +17,7 @@ This how-to outlines how to deploy a scalable, production-ready Kubernetes clust
 - Account with Owner role assignment on the target Azure Subscription.
 - Azure DevOps or Azure DevOps Server administrator access (needed to install Extensions)
 - App DNS records and SSL certificates (can be wildcards)
+- Make sure all Azure Resource Providers used in this how-to are enabled on the subscription. More info about this [here](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-supported-services).
 
 ### Step A. Deploying Container Platform (Azure Kubernetes Service)
 
@@ -171,7 +172,7 @@ Now execute the pipeline by creating a release and filling out the correct param
 |AzureDevOps_API_Endpoint| GUID of the Azure DevOps API Service Connection, created in the previous section |
 |AzureDevOps_Release_API_Endpoint| GUID of the Azure DevOps Release Management API Service Connection, created in the previous section |
 |kubernetes_cluster| GUID of the Kubernetes cluster Service Connection, created in the previous section |
-|orgname| Select a short organizational name (<10 characters) that will be used in the various  deployed resources (to ensure global uniqueness on Azure)|
+|orgname| Select a short organizational name (<10 characters, only lowercase, only letters) that will be used in the various  deployed resources (to ensure global uniqueness on Azure)|
 |AzurePipelines_Pool_QueueID|The queue ID of the "Azure Pipelines" agent pool* |
 
 * Queue IDs of Agent Pools can be derived by hovering over the Queue in the Agent Pool settings (located in the Project Settings tab).
