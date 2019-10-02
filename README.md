@@ -155,7 +155,7 @@ In order for the Azure DevOps UI to show us the option of importing a Release pi
 ![Create empty pipeline](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/emptypipeline.gif)
 
 Now import the initial deployment pipeline file you downloaded from this repository.
-During the  import process, you will have to manually configure it to use the "Hosted Ubuntu 1604" agent.
+During the import process, you will have to manually configure it to use the Azure Pipelines agent pool and the ubuntu agent specification.
 
 ![Create empty pipeline](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/selectcorrectagentpool.gif)
 
@@ -240,7 +240,7 @@ Executing this release will:
 ## Roadmap of this solution
 
 - Document custom runtime settings, license activation etc.
--  Document how to use cert-manager for automatic provisioning of SSL certificates using Let's Encrypt
+- Document how to use cert-manager for automatic provisioning of SSL certificates using Let's Encrypt
 - Document how to use Azure Insights for monitoring.
 - Document how to use pipelines with other Kubernetes clusters (e.g. AWS EKS).
 -  Document cluster configuration backups using Velero
