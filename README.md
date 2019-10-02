@@ -167,7 +167,7 @@ Now execute the pipeline by creating a release and filling out the correct param
 |-----------|------------|
 |Azure_DataResourceGroup|Name of the  resource group in which to deploy databases, key vaults and storage accounts|
 |Azure_DataResourceGroup_Region|  [Azure Region]([https://github.com/BuildAzure/azure-region-map/blob/master/data/azure_regions.json](https://github.com/BuildAzure/azure-region-map/blob/master/data/azure_regions.json)) of the data resourcegroup (this is the resource group in which all database-, storage- and key vault resources will be created), e.g. *westeurope*|
-|Azure_Subscription| GUID of the Azure Resource Manager Service Connection, created in the previous section  *be careful to use the GUID of the Service Connection, not of the subscription itself*|
+|Azure_Subscription| GUID of the Azure Resource Manager Service Connection, created in the previous section. **Be careful to use the GUID of the Service Connection, not of the subscription itself**|
 |AzureDevOps_API_Endpoint| GUID of the Azure DevOps API Service Connection, created in the previous section |
 |AzureDevOps_Release_API_Endpoint| GUID of the Azure DevOps Release Management API Service Connection, created in the previous section |
 |kubernetes_cluster| GUID of the Kubernetes cluster Service Connection, created in the previous section |
