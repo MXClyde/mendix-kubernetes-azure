@@ -31,7 +31,7 @@ The Mendix apps will run in Docker containers which will be orchestrated using K
 ![Create Kubernetes cluster](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/createkubernetes.png)
 4. Fill out the scaling information:
    * **With regards to enabling Virtual Nodes:** The Virtual nodes option allows containers to be directly scheduled on [Azure Container Instances](https://azure.microsoft.com/en-us/services/container-instances/). We will not use this option in this how-to. Since Mendix containers typically run 24/7, using VMs as dedicated agent nodes is typically more cost-effective.
-   * **With regards to enabling VM Scale Sets:** We will not enable VM scale sets in this how-to as the feature is stil in Preview. It promises a lot more flexibility and can be valuable in the future.
+   * **With regards to enabling VM Scale Sets:** We will not enable VM scale sets in this how-to as the feature is stil in Preview. It promises a lot more flexibility and can be valuable in the future. *update 10/2019: this feature is now out of preview, it is recommended to enable it on new clusters in order to utilize this flexibility*
 5. Fill out the authentication information:
    * **With regards to enabling RBAC:** Role-Based Access Control (RBAC) allows you to define security roles within the cluster and assign different cluster permissions to different groups of users. Enabling this is required in order to run a secure cluster.
 ![Authentication options](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/authenticationk8s.png)
