@@ -1,4 +1,4 @@
-# Disclaimer: this is not an official Mendix product, see [Support Status] https://github.com/mxclyde/mendix-kubernetes-azure#support-status)
+# Disclaimer: this is not an official Mendix product, see [Support Status](https://github.com/mxclyde/mendix-kubernetes-azure#support-status)
 # Mendix on Azure Kubernetes Service
 
 This how-to outlines how to deploy a scalable, production-ready Kubernetes cluster for hosting Mendix apps on Microsoft Azure. The solution includes all components necessary to succesfully build and operate Mendix apps on Azure and consists of the following components:
