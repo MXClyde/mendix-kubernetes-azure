@@ -65,10 +65,7 @@ Web traffic has to flow from outside the cluster towards the right Mendix contai
 1) Install helm: [https://helm.sh/](https://helm.sh/)
 
 2) Add helm to your system PATH (see [https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/) for instructions on Windows)
-3) Create a service account for Tiller, as described [here](https://github.com/helm/helm/blob/master/docs/rbac.md#tiller-and-role-based-access-control)
-4) Initialize Tiller (the server-side component of Helm) on the cluster by running: 
-
-> helm init --service-account tiller
+3) Create a service account and intialize Tiller, as described [here](https://docs.microsoft.com/en-us/azure/aks/kubernetes-helm)
 
 #### Installing NGINX Ingress Controller
 
