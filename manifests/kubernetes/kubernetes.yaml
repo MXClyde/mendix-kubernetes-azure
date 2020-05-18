@@ -10,6 +10,11 @@ items:
       namespace: #{k8s.namespace}#
     spec:
       replicas: #{k8s.replicas}# # tells deployment to run 1 pod matching the template
+      selector:
+        matchLabels:
+            name: "#{k8s.namespace}#-slave"
+            app: "#{k8s.namespace}#"
+            containertype: "slave"
       template: # create pods using pod definition in this template
         metadata:
           annotations:
@@ -97,6 +102,11 @@ items:
       namespace: #{k8s.namespace}#
     spec:
       replicas: 1 # tells deployment to run 1 pod matching the template
+      selector:
+        matchLabels:
+            app: "#{k8s.namespace}#"
+            containertype: "leader"
+            name: "#{k8s.namespace}#-leader"
       template: # create pods using pod definition in this template
         metadata:
           annotations:  
