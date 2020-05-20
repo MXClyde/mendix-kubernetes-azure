@@ -59,13 +59,13 @@ items:
                httpGet:
                  path: /
                  port: 8080
-               initialDelaySeconds: 20
+               initialDelaySeconds: 90
                periodSeconds: 5
             readinessProbe:
                httpGet:
                  path: /
                  port: 8080
-               initialDelaySeconds: 20
+               initialDelaySeconds: 90
                periodSeconds: 5
             resources:
               requests:
@@ -151,13 +151,13 @@ items:
                httpGet:
                  path: /
                  port: 8080
-               initialDelaySeconds: 20
+               initialDelaySeconds: 90
                periodSeconds: 5
             readinessProbe:
                httpGet:
                  path: /
                  port: 8080
-               initialDelaySeconds: 20
+               initialDelaySeconds: 90
                periodSeconds: 5
                failureThreshold: 120 # high number to accomodate database synchronizations
             resources:
