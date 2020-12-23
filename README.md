@@ -1,13 +1,14 @@
-# Mendix on Azure Kubernetes Service
 ##
-## Disclaimers: 
+### Disclaimers: 
 ##
-## 1) This is not an official Mendix product, see [Support Status](https://github.com/mxclyde/mendix-kubernetes-azure#support-status)
+### 1) This is not an official Mendix product, see [Support Status](https://github.com/mxclyde/mendix-kubernetes-azure#support-status)
 ##
-## 2) The recommended, productized way to run Mendix on Azure is using [Mendix for Private Cloud / Mendix Operator for Kubernetes](https://docs.mendix.com/developerportal/deploy/private-cloud)
+### 2) The recommended, productized way to run Mendix on Azure is using [Mendix for Private Cloud / Mendix Operator for Kubernetes](https://docs.mendix.com/developerportal/deploy/private-cloud)
 ##
-## 3) Parts of below how-to are now incorrect due to changes to Azure (DevOps). It is left as an exercise for the reader to fix those. I will not update this how-to anymore
+### 3) Parts of below how-to are now incorrect due to changes to Azure (DevOps). It is left as an exercise for the reader to fix those. I will not update this how-to anymore
 
+# Mendix on Azure Kubernetes Service
+ 
 This how-to outlines how to deploy a scalable, production-ready Kubernetes cluster for hosting Mendix apps on Microsoft Azure. The solution includes all components necessary to succesfully build and operate Mendix apps on Azure and consists of the following components:
 
 ![Mendix on Azure](https://mxblobstore.azureedge.net/mendix-kubernetes-azure/mendixazure.png)
