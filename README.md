@@ -1,7 +1,8 @@
+## Mendix on Azure Kubernetes Service
+#
 # Disclaimers: 
 #
 # 1) This is not an official Mendix product, see [Support Status](https://github.com/mxclyde/mendix-kubernetes-azure#support-status)
-# Mendix on Azure Kubernetes Service
 #
 # 2) The recommended, productized way to run Mendix on Azure is using [Mendix for Private Cloud / Mendix Operator for Kubernetes](https://docs.mendix.com/developerportal/deploy/private-cloud)
 #
