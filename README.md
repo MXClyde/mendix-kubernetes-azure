@@ -5,7 +5,7 @@
 ##
 ### 2) The recommended, productized way to run Mendix on Azure is using [Mendix for Private Cloud / Mendix Operator for Kubernetes](https://docs.mendix.com/developerportal/deploy/private-cloud)
 ##
-### 3) Parts of below how-to are now incorrect due to changes to Azure (DevOps). It is left as an exercise for the reader to fix those. I will not update this how-to anymore
+### 3) Parts of below how-to are now incorrect due to changes in Azure (DevOps). It is left as an exercise for the reader to work around those. I will not update this how-to anymore.
 
 # Mendix on Azure Kubernetes Service
  
@@ -245,7 +245,6 @@ Executing this release will:
 
  - Questions / issues with regards to this reference implementation can be raised in the Issues section of this Github repository, they will be answered on a best-effort basis.
  - The templates published in this repository are **not** a supported Mendix product (although they are in use by several major Mendix customers). I maintain them on a best-effort basis.
- -  Planned for Q1 2020 is the release of Mendix for Private Cloud, which will include support to deploy to any Kubernetes cluster on (at least) AWS & Azure. This offering will include an integration with the Mendix Cloud portal to enable one-click deployment from a familiar interface. This will also be a supported offering.
 
 ## Roadmap of this solution
 
