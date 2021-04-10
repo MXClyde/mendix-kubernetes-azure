@@ -286,7 +286,7 @@ items:
   - apiVersion: v1
     kind: "Secret"
     metadata:
-      name: m2ee
+      name: m2ee-config
       namespace: "#{k8s.namespace}#"
     data:
       adminpassword: JHd1OTVMRW5JQDQ9OVdXdA==
