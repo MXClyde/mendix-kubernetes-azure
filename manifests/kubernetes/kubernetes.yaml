@@ -23,8 +23,8 @@ items:
             ad.datadoghq.com/#{k8s.namespace}#-slave.init_configs: "[{}]"
             ad.datadoghq.com/#{k8s.namespace}#-slave.instances: "[{\"prometheus_url\": \"http://%%host%%:%%port%%/metrics\",\"namespace\": \"mendix\",\"metrics\": [\"*\"]}]"
             devops_release: "#{Release.DeploymentID}#"
+            co.elastic.metrics/hosts: http://${data.host}:${data.ports.metrics}
             co.elastic.metrics/module: prometheus
-            co.elastic.metrics.m2ee_metrics/hosts: "http://${data.host}:${data.ports.metrics}"
             co.elastic.metrics/period: 30s
           labels:
             name: "#{k8s.namespace}#-slave"
@@ -159,8 +159,8 @@ items:
             ad.datadoghq.com/#{k8s.namespace}#-leader.init_configs: "[{}]"
             ad.datadoghq.com/#{k8s.namespace}#-leader.instances: "[{\"prometheus_url\": \"http://%%host%%:%%port%%/metrics\",\"namespace\": \"mendix\",\"metrics\": [\"*\"]}]"
             devops_release: "#{Release.DeploymentID}#"
+            co.elastic.metrics/hosts: http://${data.host}:${data.ports.metrics}
             co.elastic.metrics/module: prometheus
-            co.elastic.metrics.m2ee_metrics/hosts: "http://${data.host}:${data.ports.metrics}"
             co.elastic.metrics/period: 30s
           labels:
             app: "#{k8s.namespace}#"
