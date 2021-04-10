@@ -28,6 +28,16 @@ items:
             app: "#{k8s.namespace}#"
             containertype: "slave"
         spec:
+          volumes:
+            - name: m2ee-config
+              projected:
+                sources:
+                  - secret:
+                      name: m2ee
+                      items:
+                        - key: adminpassword
+                          path: adminpassword
+                defaultMode: 420
           affinity:
             podAntiAffinity:
               preferredDuringSchedulingIgnoredDuringExecution:
@@ -132,6 +142,16 @@ items:
       name: #{k8s.namespace}#-leader
       namespace: #{k8s.namespace}#
     spec:
+      volumes:
+            - name: m2ee-config
+              projected:
+                sources:
+                  - secret:
+                      name: m2ee
+                      items:
+                        - key: adminpassword
+                          path: adminpassword
+                defaultMode: 420
       replicas: 1 # tells deployment to run 1 pod matching the template
       selector:
         matchLabels:
@@ -286,7 +306,7 @@ items:
   - apiVersion: v1
     kind: "Secret"
     metadata:
-      name: m2ee-config
+      name: m2ee
       namespace: "#{k8s.namespace}#"
     data:
       adminpassword: JHd1OTVMRW5JQDQ9OVdXdA==
