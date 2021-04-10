@@ -225,7 +225,7 @@ items:
             envFrom:
             - configMapRef:
                 name: mendix-config     
-           - name: m2ee-metrics
+          - name: m2ee-metrics
             image: 'private-cloud.registry.mendix.com/mx-m2ee-metrics:1.1.1'
             args:
               - '-port=9273'
