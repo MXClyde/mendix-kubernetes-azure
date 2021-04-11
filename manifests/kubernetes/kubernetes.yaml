@@ -25,7 +25,7 @@ items:
             devops_release: "#{Release.DeploymentID}#"
             co.elastic.metrics/hosts: http://${data.host}:${data.ports.metrics}
             co.elastic.metrics/module: prometheus
-            co.elastic.metrics/period: 30s
+            co.elastic.metrics/period: 60s
           labels:
             name: "#{k8s.namespace}#-slave"
             app: "#{k8s.namespace}#"
@@ -161,7 +161,7 @@ items:
             devops_release: "#{Release.DeploymentID}#"
             co.elastic.metrics/hosts: http://${data.host}:${data.ports.metrics}
             co.elastic.metrics/module: prometheus
-            co.elastic.metrics/period: 30s
+            co.elastic.metrics/period: 60s
           labels:
             app: "#{k8s.namespace}#"
             containertype: "leader"
